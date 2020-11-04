@@ -1,0 +1,165 @@
+{% extends 'main/base.html' %}
+{%load static %}
+{% block content %}
+<link href="{% static 'assets/dist/css/dashboard.css' %}" rel="stylesheet">
+  <body>
+    <!-- {% include 'main/navbar.html' %} -->
+    {% include 'logged_in_templates/parts/navbar.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                  <span data-feather="home"></span>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="users"></span>
+                  Add users (Not implemented)
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Add resources (Not implemented)
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file"></span>
+                  Add Policies (Not implemented)
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/domain_resource">
+                  <span data-feather="file"></span>
+                  View domain 1 resources
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/playground">
+                  <span data-feather="file"></span>
+                  Playground
+                </a>
+              </li> -->
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Welcome</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+        </div>
+      </div>
+      The currently used attributes are: {{attributes}}
+      <hr>
+        <form method="POST" action="#" id="attributes">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Setup policy (Does not work with space between values)</label>
+                <table class="table table-bordered" id="dynamic_field">
+                    <tr>
+                        <td><input type="text" name="save_attributes" id="save_attributes" placeholder="Enter value" class="form-control name_variable_list" /></td>
+                        <td><button type="button" name="add" id="add_predicate" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <hr>
+        <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" id="save" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Response</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body-2">
+            There was an error
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="{% static 'assets/dist/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> -->
+<script src="{% static 'assets/dist/js/dashboard.js' %}"></script>
+
+<script>
+  $(document).ready(function(){
+    tpk = "";
+    apk = "";
+    sign = "";
+
+    var i=1;
+    $("#add_predicate").click(function(){
+        console.log("subject button clicked")
+        i++;
+        $('#dynamic_field').append('<tr id="row'+i+'">' +
+            '<td><input type="text" name="predicate_value" id="predicate_value" placeholder="Enter value" class="form-control name_variable_list" /></td>\n' +
+            '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove1">X</button></td></tr>');
+        });
+    
+    $(document).on('click', '.btn_remove1', function(){
+        var button_id = $(this).attr("id");
+        $('#row'+button_id+'').remove();
+        console.log("remove button clickec")
+    });
+
+    $("#save").click(function(e){
+        e.preventDefault();
+        $("#save_attributes").each(function() {
+            var str = $("#attributes").serializeArray();
+            // console.log(str)
+            var separate_attribute_values = [];
+            for (var i=0;i<str.length;i++)
+            {
+                separate_attribute_values.push(str[i].value.toUpperCase());
+            }
+            final_string = "";
+            for(var i=0;i<separate_attribute_values.length;i++)
+            {
+                final_string = final_string + separate_attribute_values[i] + " AND ";
+            }
+            final_string = final_string.split(" ").reverse().slice(1).reverse().join(" ");
+            final_string = final_string.split(" ").reverse().slice(1).reverse().join(" ");
+            console.log(final_string);
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8000/playground',
+                data: {"attributes" : final_string},
+                async: false,
+                success: function(response) {
+                    console.log(response);
+                    if (response.response == 'True') {
+                      location.reload();
+                    }
+                }
+            })
+        });
+    });
+  });
+</script>
+
+
+</body>
+{% endblock %}

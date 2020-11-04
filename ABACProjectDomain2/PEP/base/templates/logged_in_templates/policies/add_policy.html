@@ -1,0 +1,356 @@
+{% extends 'main/base.html' %}
+{%load static %}
+{% block content %}
+<link href="{% static 'assets/dist/css/dashboard.css' %}" rel="stylesheet">
+  <body>
+    <!-- {% include 'main/navbar.html' %} -->
+    {% include 'logged_in_templates/parts/navbar.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/dashboard">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/user">
+              <span data-feather="users"></span>
+              Add users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/resources">
+              <span data-feather="file"></span>
+              Add resources
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/adminPanel/policy">
+              <span data-feather="file"></span>
+              Add Policies
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Welcome {{request.user.username}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <a type="button" class="btn btn-sm btn-outline-secondary" href="/adminPanel/add_policy">
+              Add Policy
+            </a>
+            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
+          </div>
+          <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+          </button> -->
+        </div>
+      </div>
+
+      <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+
+      <!-- <h2>Policies</h2> -->
+      <!-- <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Header</th>
+              <th>Header</th>
+              <th>Header</th>
+              <th>Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>Lorem</td>
+              <td>ipsum</td>
+              <td>dolor</td>
+              <td>sit</td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>amet</td>
+              <td>consectetur</td>
+              <td>adipiscing</td>
+              <td>elit</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>Integer</td>
+              <td>nec</td>
+              <td>odio</td>
+              <td>Praesent</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>libero</td>
+              <td>Sed</td>
+              <td>cursus</td>
+              <td>ante</td>
+            </tr>
+            <tr>
+              <td>1,004</td>
+              <td>dapibus</td>
+              <td>diam</td>
+              <td>Sed</td>
+              <td>nisi</td>
+            </tr>
+            <tr>
+              <td>1,005</td>
+              <td>Nulla</td>
+              <td>quis</td>
+              <td>sem</td>
+              <td>at</td>
+            </tr>
+            <tr>
+              <td>1,006</td>
+              <td>nibh</td>
+              <td>elementum</td>
+              <td>imperdiet</td>
+              <td>Duis</td>
+            </tr>
+            <tr>
+              <td>1,007</td>
+              <td>sagittis</td>
+              <td>ipsum</td>
+              <td>Praesent</td>
+              <td>mauris</td>
+            </tr>
+            <tr>
+              <td>1,008</td>
+              <td>Fusce</td>
+              <td>nec</td>
+              <td>tellus</td>
+              <td>sed</td>
+            </tr>
+            <tr>
+              <td>1,009</td>
+              <td>augue</td>
+              <td>semper</td>
+              <td>porta</td>
+              <td>Mauris</td>
+            </tr>
+            <tr>
+              <td>1,010</td>
+              <td>massa</td>
+              <td>Vestibulum</td>
+              <td>lacinia</td>
+              <td>arcu</td>
+            </tr>
+            <tr>
+              <td>1,011</td>
+              <td>eget</td>
+              <td>nulla</td>
+              <td>Class</td>
+              <td>aptent</td>
+            </tr>
+            <tr>
+              <td>1,012</td>
+              <td>taciti</td>
+              <td>sociosqu</td>
+              <td>ad</td>
+              <td>litora</td>
+            </tr>
+            <tr>
+              <td>1,013</td>
+              <td>torquent</td>
+              <td>per</td>
+              <td>conubia</td>
+              <td>nostra</td>
+            </tr>
+            <tr>
+              <td>1,014</td>
+              <td>per</td>
+              <td>inceptos</td>
+              <td>himenaeos</td>
+              <td>Curabitur</td>
+            </tr>
+            <tr>
+              <td>1,015</td>
+              <td>sodales</td>
+              <td>ligula</td>
+              <td>in</td>
+              <td>libero</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+    
+      <form method="POST" action="/adminPanel/policy_add_process">{% csrf_token %}
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Policy Name</label>
+          <input type="text" class="form-control" id="policy_name" name="policy_name" placeholder="">
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Policy Description</label>
+            <input type="text" class="form-control" id="policy_description" name="policy_description" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <label for="inputState">Policy Version</label>
+            <select id="policy_version" name="policy_version" class="form-control">
+              <option selected>Version 2</option>
+              <option>Version 3</option>
+            </select>
+        </div>
+
+        <!-- subject -->
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Subject</label>
+            <!-- <input type="text" class="form-control" id="policy_description" name="policy_description" placeholder=""> -->
+            <table class="table table-bordered" id="dynamic_field">
+                <tr>
+                    <td><label>Variable Name: </label></td>
+                    <td><input type="text" name="subject_name" placeholder="Enter subject name" class="form-control subject_name_list" /></td>
+                    <td><label>Value: </label></td>
+                    <td><input type="text" name="subject_value" placeholder="Enter subject value" class="form-control name_variable_list" /></td>
+                    <td><button type="button" name="add" id="add_subject" class="btn btn-success">Add More</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Action -->
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Action</label>
+            <!-- <input type="text" class="form-control" id="policy_description" name="policy_description" placeholder=""> -->
+            <table class="table table-bordered" id="dynamic_field2">
+                <tr>
+                    <td><label>Variable Name: </label></td>
+                    <td><input type="text" name="action_name" placeholder="Enter action name" class="form-control name_list"/></td>
+                    <td><label>Value: </label></td>
+                    <td><input type="text" name="action_value" placeholder="Enter your action value" class="form-control name_list" /></td>
+                    <td><button type="button" name="add" id="add_action" class="btn btn-success">Add More</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Resouce -->
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Resource</label>
+            <!-- <input type="text" class="form-control" id="policy_description" name="policy_description" placeholder=""> -->
+            <table class="table table-bordered" id="dynamic_field3">
+                <tr>
+                    <td><label>Variable Name: </label></td>
+                    <td><input type="text" name="resource_name" placeholder="Enter resource name" class="form-control name_list"/></td>
+                    <td><label>Value: </label></td>
+                    <td><input type="text" name="resource_value" placeholder="Enter your resource value" class="form-control name_list" /></td>
+                    <td><button type="button" name="add" id="add_resource" class="btn btn-success">Add More</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Environment -->
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Environment</label>
+            <!-- <input type="text" class="form-control" id="policy_description" name="policy_description" placeholder=""> -->
+            <table class="table table-bordered" id="dynamic_field4">
+                <tr>
+                    <td><label>Variable Name: </label></td>
+                    <td><input type="text" name="environment_name" placeholder="Enter environment name" class="form-control name_list"/></td>
+                    <td><label>Value: </label></td>
+                    <td><input type="text" name="environment_value" placeholder="Enter your Environment value" class="form-control name_list" /></td>
+                    <td><button type="button" name="add" id="add_environment" class="btn btn-success">Add More</button></td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+      </form>
+    
+    </main>
+  </div>
+</div>
+<script src="{% static 'assets/dist/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="{% static 'assets/dist/js/dashboard.js' %}"></script>
+
+<script>
+  $(document).ready(function(){
+    console.log("jquery woking")
+
+    var i=1;
+    var j=1;
+    var k=1;
+    var l=1;
+    $("#add_subject").click(function(){
+        console.log("subject button clicked")
+        i++;
+        $('#dynamic_field').append('<tr id="row'+i+'"><td><label>Variable Name: </label></td>\n' +
+            '<td><input type="text" name="subject_name" placeholder="Enter subject name" class="form-control subject_name_list" /></td>\n' +
+            '<td><label>Value: </label></td>\n' +
+            '<td><input type="text" name="subject_value" placeholder="Enter subject value" class="form-control name_variable_list" /></td>\n' +
+            '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove1">X</button></td></tr>');
+    });
+    $("#add_action").click(function() {
+        j++;
+        $('#dynamic_field2').append('<tr id="row'+j+'"><td><label>Variable Name: </label></td>\n' +
+            '<td><input type="text" name="action_name" placeholder="Enter action name" class="form-control action_name_list"/></td>\n' +
+            '<td><label>Value: </label></td>\n' +
+            '<td><input type="text" name="action_value" placeholder="Enter your action value" class="form-control action_value_list" /></td>' +
+            '<td><button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove2">X</button></td></tr>');
+    });
+    $("#add_resource").click(function() {
+        k++;
+        $('#dynamic_field3').append('<tr id="row'+k+'"><td><label>Variable Name: </label></td>\n' +
+            '<td><input type="text" name="resource_name" placeholder="Enter resource name" class="form-control resource_name_list" /></td>\n' +
+            '<td><label>Value: </label></td>\n' +
+            '<td><input type="text" name="resource_value" placeholder="Enter your resource value" class="form-control resource_value_list" /></td>' +
+            '<td><button type="button" name="remove" id="'+k+'" class="btn btn-danger btn_remove3">X</button></td></tr>');
+    });
+    $("#add_environment").click(function() {
+        l++;
+        $('#dynamic_field4').append('<tr id="row'+l+'"><td><label>Variable Name: </label></td>\n' +
+            '<td><input type="text" name="environment_name" placeholder="Enter environment name" class="form-control environment_name_list"/></td>\n' +
+            '<td><label>Value: </label></td>\n' +
+            '<td><input type="text" name="environment_value" placeholder="Enter your environment value" class="form-control environment_value_list" /></td>' +
+            '<td><button type="button" name="remove" id="'+l+'" class="btn btn-danger btn_remove4">X</button></td></tr>');
+    });
+    
+    $(document).on('click', '.btn_remove1', function(){
+        var button_id = $(this).attr("id");
+        $('#row'+button_id+'').remove();
+        console.log("remove button clickec")
+    });
+    $(document).on('click', '.btn_remove2', function(){
+        var button_id = $(this).attr("id");
+        $('#row'+button_id+'').remove();
+        console.log("remove button clickec")
+    });
+    $(document).on('click', '.btn_remove3', function(){
+        var button_id = $(this).attr("id");
+        $('#row'+button_id+'').remove();
+        console.log("remove button clickec")
+    });
+    $(document).on('click', '.btn_remove4', function(){
+        var button_id = $(this).attr("id");
+        $('#row'+button_id+'').remove();
+        console.log("remove button clickec")
+    });
+
+
+  })
+</script>
+
+
+</body>
+{% endblock %}

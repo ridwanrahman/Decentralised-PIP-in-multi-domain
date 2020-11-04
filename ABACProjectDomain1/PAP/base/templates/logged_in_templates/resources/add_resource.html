@@ -1,0 +1,147 @@
+{% extends 'main/base.html' %}
+{%load static %}
+{% block content %}
+<link href="{% static 'assets/dist/css/dashboard.css' %}" rel="stylesheet">
+  <body>
+    <!-- {% include 'main/navbar.html' %} -->
+    {% include 'logged_in_templates/parts/navbar.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/dashboard">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/user">
+              <span data-feather="users"></span>
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/adminPanel/resources">
+              <span data-feather="file"></span>
+              Resources
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/adminPanel/policy">
+              <span data-feather="file"></span>
+              Policies
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Welcome {{request.user.username}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <a type="button" class="btn btn-sm btn-outline-secondary" href="/adminPanel/add_policy">
+              Add Resource
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.extra_tags}}" role="alert">
+              {{message}}
+            </div>
+        {% endfor %}
+      {% endif %}
+    
+      <form method="POST" action="/adminPanel/resource_add_process">{% csrf_token %}
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Name</label>
+          <input type="text" class="form-control" id="resource_name" name="resource_name" placeholder="">
+        </div>
+        
+        <!-- <div class="form-group">
+            <label for="exampleFormControlInput1">Resource Description 1</label>
+            <textarea class="form-control" id="resource_description" name="resource_description" rows="3"></textarea>
+        </div> -->
+
+        <div class="form-group">
+          <div class="form-group">
+              <label for="sel1">Viewable to other domains</label>
+              <select class="form-control" id="viewable" name="viewable">
+                <!-- <option selected="selected">
+                  True
+                </option> -->
+                <option>True</option>
+                <option>False</option>
+              </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label for="sel1">Policy</label>
+                <select class="form-control" id="policy" name="policy">
+                    {% for policy in policies %}
+                        <option>{{ policy.policy_name }}</option>  
+                    {% endfor %}
+                </select>
+              </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Description 1</label>
+          <textarea class="form-control" id="resource_description_1" name="resource_description_1" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Description 2</label>
+          <textarea class="form-control" id="resource_description_2" name="resource_description_2" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Description 3</label>
+          <textarea class="form-control" id="resource_description_3" name="resource_description_3" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Description 4</label>
+          <textarea class="form-control" id="resource_description_4" name="resource_description_4" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resource Description 5</label>
+          <textarea class="form-control" id="resource_description_5" name="resource_description_5" rows="3"></textarea>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+      </form>
+    
+    </main>
+  </div>
+</div>
+<script src="{% static 'assets/dist/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="{% static 'assets/dist/js/dashboard.js' %}"></script>
+
+<script>
+  $(document).ready(function(){
+    console.log("jquery woking");
+  })
+</script>
+
+
+</body>
+{% endblock %}
