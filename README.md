@@ -1,5 +1,7 @@
 # Attribute Based Acces Control (ABAC) with Attribute Based Signature (ABS)
 
+Link to my research paper: [Paper](https://ridwanrahman.github.io/images/ABAC_research_paper(IEEE_Access).pdf)
+
 Introduction to ABAC
 =============
 According to the National Institute of Standards and Technology (NIST), Attribute Based Acces Control (ABAC) is an access control method where access permissions to resources are granted or denied by policies which are based on assigned attributes containing values of the subject, object, environment conditions and the names of resources. The basic idea of ABAC is simple: if the entity who wants to access a resource, possess the specific attributes related to the resource as set by the administrator, then the access is granted, otherwise it is denied.
