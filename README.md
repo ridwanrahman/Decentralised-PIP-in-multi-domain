@@ -2,7 +2,19 @@
 
 Introduction to ABAC
 =============
-According to the National Institute of Standards and Technology (NIST), ABAC is an access control method where access permissions to resources are granted or denied by policies which are based on assigned attributes containing values of the subject, object, environment conditions and the names of resources. The basic idea of ABAC is simple: if the entity who wants to access a resource, possess the specific attributes related to the resource as set by the administrator, then the access is granted, otherwise it is denied.
+According to the National Institute of Standards and Technology (NIST), Attribute Based Acces Control (ABAC) is an access control method where access permissions to resources are granted or denied by policies which are based on assigned attributes containing values of the subject, object, environment conditions and the names of resources. The basic idea of ABAC is simple: if the entity who wants to access a resource, possess the specific attributes related to the resource as set by the administrator, then the access is granted, otherwise it is denied.
+
+ABAC contains multiple entities. Their abbreviations and acronyms are given here and the complete process of ABAC is summarized in the image below:
+
+Abbreviation  | Acronym
+------------- | -------------
+PEP  | Policy Enforcement Point
+PIP  | Policy Information Point
+PDP  | Policy Decision Point
+PAP  | Policy Administration Point
+
+![](https://ridwanrahman.github.io/images/ABACArchitecture.png)
+
 Links to Resources:
 [Wikipedia](https://www.wikiwand.com/en/Attribute-based_access_control)
 [Axiomatics - ABAC](https://www.axiomatics.com/attribute-based-access-control/)
