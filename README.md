@@ -32,6 +32,21 @@ The fundamental steps of this proposed model are listed here:
 - The message will be sent to the domain that contains the resource using HTTP methods.
 - The domain will verify the signature and permit or deny the access to the resource. This is also accomplished with the open source ABS.
 
+Steps
+-------------
+The steps are outlined here:
+- Each domain will have their own ABAC system consisting of the basic domain entities. Each domain entity is a separate decoupled microservice running on their own web server. The PEP only allows the names of the resources be available to the other domains. The contents are hidden as set by the administrator. The PEP also intercepts any request to the database which has the resources saved.
+- The administrator write policies for the resources.
+- Users from Domain 2 will be able to view the resource names and select a specific resource they want to view. This is provided by the PEP of domain 1. Domain 2 will also be able to send an access request to domain 1 to view the resource.
+- The PEP in domain would receive the request. It will be able to query the PAP to find the policy for the specific resource. After finding the specific policy, the PEP will turn the policy into a claim-predicate and send it to domain 2.
+- The PEP of domain 2 would receive the claim-predicate. Then the PEP would need to know if domain 2 can satisfy it. So, the PEP would query the PIP to know if the attributes exist. This forms the basis of of the decentralized PIP. Each domain will have their own PIP and will be able to query the attributes of the user each time any user of the domain wants to access resources in
+other domains.
+- The PEP will receive the attributes. Using these attributes, it will generate a predicate statement that satisfies the claim-predicate. Then it will sign a message with the predicate.
+- The PEP of domain 2 will send the signature to domain 1 for verification.
+- The PEP of domain 1 receives the signature and verifies it to give a True or False response.
+
+
+
 Technologies Used
 -------------
 * Django v3.0
@@ -41,5 +56,3 @@ Technologies Used
 * Mongodb
 * SQLite3
 
-
-###End
