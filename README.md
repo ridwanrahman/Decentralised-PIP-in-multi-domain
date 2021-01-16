@@ -57,7 +57,11 @@ other domains.
 - The PEP of domain 2 will send the signature to domain 1 for verification.
 - The PEP of domain 1 receives the signature and verifies it to give a True or False response.
 
+The entire process is summarized below and a sequence diagram is also given.
+![](https://ridwanrahman.github.io/images/ProposedABACdiagram.png)
 
+
+![](https://ridwanrahman.github.io/images/abacUML.png)
 
 Technologies Used
 -------------
